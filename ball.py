@@ -1,5 +1,6 @@
 import pygame
 from entity import *
+import random
 
 
 class Ballzzzz(Entity):
@@ -8,19 +9,36 @@ class Ballzzzz(Entity):
         self.radius = radius
         self.color = (255, 0, 0)
         self.velocityX = 0.2
-        self.velocityY = -0.2
+        self.velocityY = 0
+
+    def restart(self):
+        # RESTART
+        print('you died')
+
+
 
     def collision(self):
-        for entity in getEntityList():
-            if entity != self:
-                if (entity.x < self.x + self.width and
-                        entity.x + entity.width > self.x and
-                        entity.y < self.y + self.height and
-                        entity.y + entity.height > self.y):
-                    print('COLLIDED')
-                    self.velocityX = self.velocityX * -1
-                    self.velocityY = self.velocityY * -1
-                    # FIX THIS
+        screenWidth = pygame.display.get_surface().get_width()
+        screenHeight = pygame.display.get_surface().get_height()
+
+        paddle = getEntityList()[0]
+        rightBorder = getEntityList()[1]
+
+        if self.x >= screenWidth - self.width - rightBorder.width/2 or\
+                self.x <= self.width + paddle.width/2 + paddle.x and\
+                (self.y + self.height > paddle.y and self.y < paddle.y + paddle.height):
+            self.velocityX *= -1
+            self.velocityY = random.uniform(-0.3, 0.3)
+
+        if self.y > screenHeight - self.height/2 or self.y < self.height/2:
+            self.velocityY *= -1
+
+        # if self.y > self.height or self.y < screenHeight - self.height:
+        #     self.velocityY *= -1
+
+
+
+
 
 
     def update(self):
