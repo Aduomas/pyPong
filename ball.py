@@ -20,6 +20,7 @@ class Ballzzzz(Entity):
                     print('COLLIDED')
                     self.velocityX = self.velocityX * -1
                     self.velocityY = self.velocityY * -1
+                    # FIX THIS
 
 
     def update(self):
